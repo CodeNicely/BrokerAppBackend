@@ -19,6 +19,7 @@ from splash_screen.views import splash_scr_response
 from otp.views import send_otp
 from otp.views import verify_otp
 from register_deals.views import register_offer,send_offers 
+from final_deals.views import final_deals_to_show,final_deals_to_get
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^splash_screen/', splash_scr_response),
@@ -26,4 +27,6 @@ urlpatterns = [
     url(r'^verify_otp/', verify_otp),
     url(r'^register_deals/', register_offer ),
     url(r'^send_deals/',send_offers),
+    url(r'^get_final_deals/',final_deals_to_show),
+    url(r'^store_final_deals/',final_deals_to_get),
 ]

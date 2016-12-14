@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'otp',
     'custom',
     'register_deals',
+    'final_deals',
     
 ]
 
