@@ -19,21 +19,16 @@ def send_otp(request):
 		city=str(request.POST.get("city"))
 		catigory=str(request.POST.get("catigory"))
 		otp=random.randint(10000,99999)
-		print "here"
 		#opt sending
-		msg="your one time otp is "+str(otp);
+		msg="your one time otp is "+str(otp);		
 		send_sms(mobile,msg)
-		print "yaha bhi"
+		
 		try:
 			otp_row=otp_info.objects.get(mobile = int(mobile))
-			print "1"
 			setattr(otp_row,'flag',False)
 			setattr(otp_row,'otp',int(otp))
-			print "2"
 			otp_row.save()
-			print "3"
 			user_row=login_user.objects.get(mobile=int(mobile))
-			print "4"
 			setattr(user_row,'name',name)
 			setattr(user_row,'firm_name',frim_name)
 			setattr(user_row,'city',city)
@@ -79,7 +74,7 @@ def verify_otp(request):
 			try:
 				setattr(otp_list,'flag',True)
 				access_token= jwt.encode({'mobile':str(mobile)}, '999123',algorithm='HS256')
-				setattr(otp_info,'access_token',access_token)
+				setattr(otp_list,'access_token',access_token)
 				otp_list.save()
 				response_json['access_token']=str(access_token)
 				print 'Access Token Created'

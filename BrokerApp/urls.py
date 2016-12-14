@@ -18,10 +18,12 @@ from django.contrib import admin
 from splash_screen.views import splash_scr_response
 from otp.views import send_otp
 from otp.views import verify_otp
+from register_deals.views import register_offer,send_offers 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^splash_screen/', splash_scr_response),
     url(r'^send_otp/', send_otp),
     url(r'^verify_otp/', verify_otp),
-    
+    url(r'^register_deals/', register_offer ),
+    url(r'^send_deals/',send_offers),
 ]
