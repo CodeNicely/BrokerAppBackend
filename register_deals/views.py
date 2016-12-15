@@ -4,6 +4,7 @@ import jwt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from login.models import *
+from custom.notification import pushnotification
 # Create your views here.
 @csrf_exempt
 def register_offer(request):
@@ -22,6 +23,11 @@ def register_offer(request):
 			catigory=request.POST.get("catigory"))
 		response_json['success']=True
 		response_json["message"]="offer saved"
+		# notification to admin
+		user_row=login_user.objects.get(mobile=int(json["mobile"]))		
+		message=user_row.firm_name+"has entered a new deal for "+str(request.POST.get("product_name"))
+		title="New Entry"
+		pushnotification(fcm_of_admin,title,message)    #admin fcm required
 
 	except Exception,e:
 

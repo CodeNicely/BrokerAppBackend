@@ -4,6 +4,8 @@ import jwt
 from django.http import JsonResponse
 from login.models import *
 from django.views.decorators.csrf import csrf_exempt
+from splash_screen.models import *
+from custom.notification import pushnotification
 # Create your views here.
 @csrf_exempt
 def final_deals_to_show(request):
@@ -18,7 +20,7 @@ def final_deals_to_show(request):
 				response_json["success"]=True
 				response_json["message"]="all deals"
 				response_json["deals"]=[]
-				for row in deals.objects.all():
+				for row in deals.objects.filter(show=True):
 					temp_json={}
 					temp_json["product_name"]=row.product_name
 					temp_json["quantity"]=row.quantity
@@ -47,14 +49,33 @@ def final_deals_to_get(request):
 	try:
 		response_json={}	
 		try:
-			deal_row=deals.objects.get(product_name=str(request.POST.get("product_name")))
-			setattr(dealrow,"quantity",int(request.POST.get("quantity")))
-			setattr(dealrow,"quality",str(request.POST.get("quality")))
-			setattr(dealrow,"price",int(request.POST.get("price")))
-			deal_row.save()
-			print "updated exsisting one"		
-			response_json["success"]=True
-			response_json["message"]="updated an exsisting deals"
+			if request.POST.get("show")==True :
+
+				deal_row=deals.objects.filter(product_name=str(request.POST.get("product_name"))).get(quality=str(request.POST.get("quality")))
+				setattr(deal_row,"quantity",int(request.POST.get("quantity")))
+				setattr(deal_row,"price",int(request.POST.get("price")))
+				setattr(deal_row,"show",int(request.POST.get("show")))
+				deal_row.save()
+				print "updated exsisting one"		
+				response_json["success"]=True
+				response_json["message"]="updated an exsisting deals"
+				#notification sent for users
+				message="deal for "+str(request.POST.get("product_name"))
+				message+="has been updated"
+				title="Update in a deal"
+				for o in fcm_data.objects.all():
+					pushnotification(o.fcm,title,message)
+			else:
+				deal_row=deals.objects.get(product_name=str(request.POST.get("product_name")))
+				setattr(deal_row,"show",int(request.POST.get("show")))
+				setattr(deal_row,"quantity",int(request.POST.get("quantity")))
+				setattr(deal_row,"quality",str(request.POST.get("quality")))
+				setattr(deal_row,"price",int(request.POST.ge("price")))
+				deal_row.save()				
+				print "a deal is updated and disabled"
+				response_json["success"]=True
+				response_json["message"]="updated and view is disabled"
+				
 		
 		except:
 		
@@ -66,6 +87,12 @@ def final_deals_to_get(request):
 			print "new deal"		
 			response_json["success"]=True
 			response_json["message"]="new deal created"
+			message="deal for new product "+str(request.POST.get("product_name"))
+			message+="has arrived"
+			title="Update in a deal"
+			for o in fcm_data.objects.all():
+				pushnotification(o.fcm,title,message)
+
 	except Exception,e:
 		
 		print e

@@ -14,4 +14,5 @@ class deals(models.Model):
 	quality=models.CharField(max_length=120,default=0)
 	price=models.IntegerField(default=0)
 	#catigory=models.CharField(max_length=10,default="seller",blank=True)
-	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
+	modified= models.DateTimeField(auto_now=True,auto_now_add=False)	
+	show=models.BooleanField(default=False)
