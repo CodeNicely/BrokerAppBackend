@@ -30,7 +30,7 @@ def send_otp(request):
 			otp_row.save()
 			user_row=login_user.objects.get(mobile=int(mobile))
 			setattr(user_row,'name',name)
-			setattr(user_row,'firm_name',frim_name)
+			setattr(user_row,'firm_name',firm_name)
 			setattr(user_row,'city',city)
 			setattr(user_row,'catigory',catigory)
 			user_row.save()
@@ -46,7 +46,8 @@ def send_otp(request):
 			print "new user created"
 		response_json['success']=True
 		response_json['message']="Otp Sent Successfully"
-	   except:
+	   except Exception,e:
+		print e
 		response_json['success']=False
 		response_json['message']="Otp is not sent"
 	   print str(response_json)
