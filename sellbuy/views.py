@@ -3,6 +3,7 @@ from .models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import jwt
 # Create your views here.
 @csrf_exempt
 def add_sell_buy(request):
@@ -17,7 +18,7 @@ def add_sell_buy(request):
 			product_name=request.POST.get('product_name')
 			product_description=request.POST.get('product_description')
 			product_price=request.POST.get('product_price')
-			unit=request.POST.get('product_unit')
+			product_unit=request.POST.get('product_unit')
 			sell_buy_data.objects.create(category_id=category_id,mobile=mobile,product_name=product_name,product_price=product_price,product_description=product_description,product_unit=product_unit)
 			response_json['success']=True
 			response_json['message']='Requirement Successfully Submitted'

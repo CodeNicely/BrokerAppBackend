@@ -14,7 +14,7 @@ class sell_buy_data(models.Model):
  	UNIT_CHOICES = (
     ('Ton ( टन )', "Ton ( टन )"),
     ('Quintal ( क्विंटल )', "Quintal ( क्विंटल )"))
-	unit=models.CharField(choices=UNIT_CHOICES,max_length=20,null=False,default='Quintal ( क्विंटल )')
+	product_unit=models.CharField(choices=UNIT_CHOICES,max_length=20,null=False,default='Quintal ( क्विंटल )')
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)	
 	
