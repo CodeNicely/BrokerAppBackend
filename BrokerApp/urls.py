@@ -18,15 +18,19 @@ from django.contrib import admin
 from splash_screen.views import splash_scr_response
 from otp.views import send_otp
 from otp.views import verify_otp
-from register_deals.views import register_offer,send_offers 
-from final_deals.views import final_deals_to_show,final_deals_to_get
+from sellbuy.views import add_sell_buy
+from deals.views import get_categories,get_products
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^splash_screen/', splash_scr_response),
     url(r'^send_otp/', send_otp),
     url(r'^verify_otp/', verify_otp),
-    url(r'^register_deals/', register_offer ),
-    url(r'^send_deals/',send_offers),
-    url(r'^get_final_deals/',final_deals_to_show),
-    url(r'^store_final_deals/',final_deals_to_get),
-]
+    url(r'^get_categories/', get_categories),
+    url(r'^get_products/', get_products),
+    url(r'^add_sell_buy/', add_sell_buy),]
+
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
