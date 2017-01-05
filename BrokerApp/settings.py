@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'custom',
     'deals',
     'sellbuy',
-    
+    'contact_us',
+    'orders',
+    'payments',
 ]
 
 MIDDLEWARE_CLASSES = [

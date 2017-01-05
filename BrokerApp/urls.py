@@ -19,6 +19,7 @@ from splash_screen.views import splash_scr_response
 from otp.views import send_otp
 from otp.views import verify_otp
 from sellbuy.views import add_sell_buy
+from contact_us.views import contact_us
 from deals.views import get_categories,get_products
 
 urlpatterns = [
@@ -28,7 +29,10 @@ urlpatterns = [
     url(r'^verify_otp/', verify_otp),
     url(r'^get_categories/', get_categories),
     url(r'^get_products/', get_products),
-    url(r'^add_sell_buy/', add_sell_buy),]
+    url(r'^add_sell_buy/', add_sell_buy),
+    url(r'^contact_us/', contact_us),
+    
+    ]
 
 from django.conf import settings
 from django.conf.urls.static import static
